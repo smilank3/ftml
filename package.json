@@ -1,0 +1,12 @@
+{
+  "name": "ftml",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "type":"module",
+  "author": "smilank3",
+  "license": "MIT"
+}
