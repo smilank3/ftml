@@ -8,7 +8,7 @@ import {
 
 import htmlTags from './htmlTags.js'
 import cmdToTree from './command.js'
-import asciimath2latex from 'asciimath-to-latex';
+import asciimath2latex from '../../src/package/asciimath2latex.js';
 import katex from 'katex'
 
 class Ftml {
@@ -319,13 +319,13 @@ class Ftml {
 
 
 				// ascii math convert.
-				 let latex= asciimath2latex.default(tree.tok.value);
+				 let latex= asciimath2latex(tree.tok.value);
 				 let mathml=katex.renderToString(`${latex}`,{throwOnErro:false});
 				html.push(`<span>${mathml}</span>`);
 			} else if (tree.nodeType === 'BLOCK_MATH') {
 
 				// ascii math convert.
-				 let latex= asciimath2latex.default(tree.tok.value);
+				 let latex= asciimath2latex(tree.tok.value);
 				 let mathml=katex.renderToString(`${latex}`,{throwOnErro:false});
 				html.push(`<blockquote>${mathml}</blockquote>`)
 			}

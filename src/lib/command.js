@@ -3,13 +3,13 @@ import {
 	Tree,
 	Token,
 } from './util.js'
-import ftml from './ftml.js'
+
 
 
 
 var isObjectLiteral = (obj) => {
 
-	return obj != null && obj.constructor.name === 'Object';
+	return obj !== null && obj.constructor.name === 'Object';
 }
 
 

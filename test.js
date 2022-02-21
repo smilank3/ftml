@@ -1,5 +1,6 @@
 import ftml from './src/lib/index.js';
 
+import s from './src/package/asciimath2latex.js'
 
 let tableData = {
 	heading: ['Name', 'Age', 'gender'],
@@ -52,7 +53,7 @@ let chartData = {
 let test = `
 
   p{this is inline math $2x-3x$}
-  p{this is block math $$2x-3x=90$$}
+
 `
 
 
