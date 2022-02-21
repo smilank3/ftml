@@ -48,15 +48,11 @@ let chartData = {
 {# CREATE TABLE WITH ${JSON.stringify(tableData)} #}
 */
 
-let x = () => {
-	return `
-       tet
-	`
-}
+
 let test = `
 
-
-{# create list with {type:'ul',data:[2,3]} #}
+  p{this is inline math $2x-3x$}
+  p{this is block math $$2x-3x=90$$}
 `
 
 

@@ -6,7 +6,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "type":"module",
+  "type": "module",
   "author": "smilank3",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "asciimath-to-latex": "^0.5.1",
+    "katex": "^0.15.2"
+  }
 }
