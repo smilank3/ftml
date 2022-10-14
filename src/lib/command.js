@@ -16,18 +16,13 @@ var isObjectLiteral = (obj) => {
 // check the data value 
 
 function checkValue(value) {
-	if (value <= 1000) {
-		if (value < 100) {
 
-			if (value < 10) {
-				return value * 10;
-			}
-
-			return value;
-		}
-
-		return value / 10;
+	if (value > 100) {
+		throw new RangeError(`Value must be <= 100`)
 	}
+
+	return value * 10; // multipy by 10, to make the bar visible.
+
 }
 
 // list
@@ -51,21 +46,21 @@ const renderList = (listData) => {
 		throw new SyntaxError('lists type prop must be string.');
 	}
 
-	if (data === 'undefined') {
+	if (data === undefined) {
 		throw new SyntaxError('list data props missing')
 	} else
-	if (!Array.isArray(data)) {
-		throw new SyntaxError('list data must be an Array')
-	}
-/*
-	for (var element of data) {
-
-		if (!isObjectLiteral(element)) {
-			throw new SyntaxError("list data's element must be an Object Literal");
+		if (!Array.isArray(data)) {
+			throw new SyntaxError('list data must be an Array')
 		}
-	}
-	*/
+	/*
+		for (var element of data) {
 	
+			if (!isObjectLiteral(element)) {
+				throw new SyntaxError("list data's element must be an Object Literal");
+			}
+		}
+		*/
+
 	let listType = null;
 
 
@@ -105,19 +100,19 @@ const renderTable = (tableData) => {
 		data
 	} = tableData;
 
-	if (heading === 'undefined') {
+	if (heading === undefined) {
 		throw new SyntaxError('heading props missing')
 	} else
-	if (!Array.isArray(heading)) {
-		throw new SyntaxError('heading must be an Array')
-	}
+		if (!Array.isArray(heading)) {
+			throw new SyntaxError('heading must be an Array')
+		}
 
-	if (data === 'undefined') {
+	if (data === undefined) {
 		throw new SyntaxError('data props missing')
 	} else
-	if (!Array.isArray(data)) {
-		throw new SyntaxError('data must be an Array')
-	}
+		if (!Array.isArray(data)) {
+			throw new SyntaxError('data must be an Array')
+		}
 
 
 	for (var element of data) {
@@ -235,7 +230,7 @@ const renderChart = (chartData) => {
 		let span = new Tree('TAG', new Token('TOK_TAG', 'span'));
 		span.appendChild(new Tree('INNER_TEXT', new Token('TOK_TEXT', data[i][`${xkey}`])))
 		let tdInnerTag = new Tree('TAG', new Token('TOK_TAG', ''));
-		newtd.appendChild(new Tree("INNER_TEXT", new Token('TOK_TEXT', data[i][ykey] + `${prefix?prefix:''}`)));
+		newtd.appendChild(new Tree("INNER_TEXT", new Token('TOK_TEXT', data[i][ykey] + `${prefix ? prefix : ''}`)));
 
 		newtd.attributes = new Token('TOK_ATTRIBUTES', `style="vertical-align:bottom;"`)
 		//td.appendChild(tdInnerTag)
@@ -325,7 +320,7 @@ const tokenize = (input) => {
 
 	if (result.length < 3) {
 
-		throw SyntaxError(`SyntaxError: Unexpected CMD ${result.join(' ')}`)
+		throw new SyntaxError(`Unexpected CMD ${result.join(' ')}`)
 	}
 
 	try {
@@ -333,20 +328,20 @@ const tokenize = (input) => {
 
 		return {
 			construct: result[0].toLowerCase() == 'create' ? 'create' : (() => {
-				throw new Error(`Unexpected token '${result[0]}'. Expected 'create'`)
+				throw new SyntaxError(`Unexpected token '${result[0]}'. Expected 'create'`)
 			})(),
 			what: ['table', 'chart', 'list'].includes(result[1].toLowerCase()) ? result[1].toLowerCase() : (() => {
-				throw new Error(`Unexpected token '${result[1]}'. Expected 'chart' or 'table`)
+				throw new SyntaxError(`Unexpected token '${result[1]}'. Expected 'chart' or 'table`)
 			})(),
 			preposition: result[2] && result[2].toLowerCase() === "with" ? 'with' : (() => {
-				throw new Error(`Unexpected token '${result[2]}'. Expected 'with' `)
+				throw new SyntaxError(`Unexpected token '${result[2]}'. Expected 'with' `)
 			})(),
-			data: result[3] && isObject(result[3], `Unexpected data type ${result[3]}. `)
+			data: result[3] && isObject(result[3], `Unexpected data type`)
 
 		}
 
 	} catch (err) {
-		throw new SyntaxError(err.message);
+		throw err;
 
 
 	}
@@ -383,6 +378,6 @@ export default (cmdString) => {
 		}
 
 	} catch (err) {
-		throw new SyntaxError(err.message)
+		throw err
 	}
 }

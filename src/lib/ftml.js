@@ -44,11 +44,7 @@ class Ftml {
 	block() {
 
 
-		var tok;
-		var tree;
-		var tempTree;
-		var tempTree2;
-
+		var tok, tree, tempTree, tempTree2;
 
 
 		if (this.peek().type == "TOK_TAG") {
@@ -106,7 +102,7 @@ class Ftml {
 
 				if (this.peek().type !== 'TOK_RPAREN') {
 
-					throw new SyntaxError('missing ) ');
+					throw new SyntaxError('missing ] ');
 					return;
 				} else {
 
@@ -196,7 +192,7 @@ class Ftml {
 			} catch (err) {
 
 				// send text error 
-				return new Tree('INNER_TEXT', new Token('TOK_TEXT', `<aside style="color:red;background-color:#fcebeb;font-weight:500"><p>${err.message}</p></aside>`));
+				return new Tree('INNER_TEXT', new Token('TOK_TEXT', `<aside style="color:red;background-color:#fcebeb;font-weight:500"><p>${err}</p></aside>`));
 			}
 
 
@@ -229,7 +225,7 @@ class Ftml {
 
 		} catch (err) {
 
-			throw new SyntaxError(err.message)
+			throw err;
 		}
 
 
@@ -243,6 +239,7 @@ class Ftml {
 	// convert to HTML
 	toHTML(input) {
 
+
 		var html = [];
 		var i;
 
@@ -251,13 +248,14 @@ class Ftml {
 		try {
 
 			tree = this.parse(input.replace(/\t/g, ''));
+			console.log(tree)
 
 
 		} catch (err) {
 
 
 
-			throw new SyntaxError(err.message)
+			throw err;
 		}
 
 
@@ -273,7 +271,7 @@ class Ftml {
 
 				if (htmlTags.includes(tree.tok.value)) {
 
-					html.push(`<${tree.tok.value}${tree.attributes && tree.attributes.value!=undefined?` ${tree.attributes.value}`:''}>\t\n`)
+					html.push(`<${tree.tok.value}${tree.attributes && tree.attributes.value != undefined ? ` ${tree.attributes.value}` : ''}>\t\n`)
 				} else {
 
 
@@ -319,14 +317,14 @@ class Ftml {
 
 
 				// ascii math convert.
-				 let latex= asciimath2latex(tree.tok.value);
-				 let mathml=katex.renderToString(`${latex}`,{throwOnErro:false});
+				let latex = asciimath2latex(tree.tok.value);
+				let mathml = katex.renderToString(`${latex}`, { throwOnErro: false });
 				html.push(`<span>${mathml}</span>`);
 			} else if (tree.nodeType === 'BLOCK_MATH') {
 
 				// ascii math convert.
-				 let latex= asciimath2latex(tree.tok.value);
-				 let mathml=katex.renderToString(`${latex}`,{throwOnErro:false});
+				let latex = asciimath2latex(tree.tok.value);
+				let mathml = katex.renderToString(`${latex}`, { throwOnErro: false });
 				html.push(`<blockquote>${mathml}</blockquote>`)
 			}
 
@@ -334,6 +332,7 @@ class Ftml {
 
 
 		recurse(tree);
+
 
 		//
 		return html.join("");
@@ -365,7 +364,7 @@ class Ftml {
 
 				if (htmlTags.includes(tree.tok.value)) {
 
-					html.push(`<${tree.tok.value}${tree.attributes && tree.attributes.value!=undefined?` ${tree.attributes.value}`:''}>\r`)
+					html.push(`<${tree.tok.value}${tree.attributes && tree.attributes.value != undefined ? ` ${tree.attributes.value}` : ''}>\r`)
 				} else {
 
 

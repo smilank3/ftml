@@ -1,6 +1,7 @@
 import ftml from './src/lib/index.js';
 
-import s from './src/package/asciimath2latex.js'
+
+
 
 let tableData = {
 	heading: ['Name', 'Age', 'gender'],
@@ -52,7 +53,7 @@ let chartData = {
 
 let test = `
 
-  p{this is inline math $2x-3x$}
+  {p{this is inline math $2x-3x$}}
 
 `
 
@@ -60,15 +61,11 @@ let test = `
 
 try {
 	
-	const t0 = performance.now();
 
 
 	let html = ftml.toHTML(test);
 	console.log(html)
 
-	//ftml.printTree(test)
-	const t1 = performance.now();
-	console.log(`Call to doSomething took ${t1 - t0} milliseconds.`);
 
 
 
