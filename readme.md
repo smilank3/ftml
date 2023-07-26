@@ -139,4 +139,4 @@ Only supported commands as of now.
 
   
 ## License
- @smiank3  MIT License.
+ @smilank3  MIT License.
